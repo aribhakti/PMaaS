@@ -8,6 +8,8 @@ import { useLanguage } from '../contexts/LanguageContext';
 export const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('');
+  const [scrollProgress, setScrollProgress] = useState(0);
   const { t } = useLanguage();
 
   const links: NavLink[] = [
@@ -20,18 +22,42 @@ export const Navbar: React.FC = () => {
 
   useEffect(() => {
     const handleScroll = () => {
+      // Handle Navbar transparency
       setIsScrolled(window.scrollY > 20);
+
+      // Handle Scroll Progress Bar
+      const totalScroll = document.documentElement.scrollTop;
+      const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scroll = `${totalScroll / windowHeight}`;
+      setScrollProgress(Number(scroll));
+
+      // Handle Active Section Logic (ScrollSpy)
+      const sections = links.map(link => link.href.substring(1));
+      let current = '';
+      
+      for (const section of sections) {
+        const element = document.getElementById(section);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          // If the top of the section is near the top of the viewport (with some offset)
+          if (rect.top <= 150 && rect.bottom >= 150) {
+            current = `#${section}`;
+          }
+        }
+      }
+      setActiveSection(current);
     };
+
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [links]);
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b border-transparent ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b ${
         isScrolled || isMobileMenuOpen
-          ? 'bg-background/80 backdrop-blur-md border-border'
-          : 'bg-transparent'
+          ? 'bg-background/80 backdrop-blur-md border-border shadow-sm'
+          : 'bg-transparent border-transparent'
       }`}
       aria-label="Main Navigation"
     >
@@ -54,10 +80,16 @@ export const Navbar: React.FC = () => {
                 <a
                   key={link.label}
                   href={link.href}
-                  className="relative text-sm font-medium text-muted hover:text-primary transition-colors py-1 group"
+                  className={`relative text-sm font-medium transition-colors py-1 group ${
+                    activeSection === link.href ? 'text-primary' : 'text-muted hover:text-primary'
+                  }`}
                 >
                   {link.label}
-                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
+                  <span 
+                    className={`absolute bottom-0 left-0 h-0.5 bg-accent transition-all duration-300 ${
+                      activeSection === link.href ? 'w-full' : 'w-0 group-hover:w-full'
+                    }`}
+                  ></span>
                 </a>
               ))}
             </div>
@@ -82,6 +114,14 @@ export const Navbar: React.FC = () => {
         </div>
       </div>
 
+      {/* Scroll Progress Bar */}
+      <div className="absolute bottom-0 left-0 h-[2px] bg-blue-600/30 w-full">
+        <div 
+          className="h-full bg-blue-600 shadow-[0_0_10px_rgba(37,99,235,0.5)] transition-all duration-150 ease-out" 
+          style={{ width: `${scrollProgress * 100}%` }}
+        />
+      </div>
+
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
         <div className="md:hidden bg-background border-b border-border absolute w-full animate-fade-in shadow-lg">
@@ -91,7 +131,11 @@ export const Navbar: React.FC = () => {
                 key={link.label}
                 href={link.href}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="block px-3 py-3 rounded-md text-base font-medium text-muted hover:text-primary hover:bg-surface transition-colors"
+                className={`block px-3 py-3 rounded-md text-base font-medium transition-colors ${
+                  activeSection === link.href 
+                  ? 'text-primary bg-surfaceHighlight/50' 
+                  : 'text-muted hover:text-primary hover:bg-surface'
+                }`}
               >
                 {link.label}
               </a>

@@ -20,12 +20,12 @@ export const Brands: React.FC = () => {
         <FadeIn>
           <p className="text-center text-sm font-medium text-muted mb-8 uppercase tracking-widest">{t.brands.trustedBy}</p>
           
-          <div className="relative w-full overflow-hidden mask-linear-fade">
+          <div className="relative w-full overflow-hidden mask-linear-fade transform-gpu">
             {/* Gradient Masks for smooth fade edges - Updated for dynamic bg */}
-            <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-background to-transparent z-10"></div>
-            <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-background to-transparent z-10"></div>
+            <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none"></div>
+            <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none"></div>
             
-            <div className="flex w-[200%] animate-marquee">
+            <div className="flex w-[200%] animate-marquee transform-gpu will-change-transform">
               {seamlessBrands.map((brand, idx) => (
                 <div key={idx} className="flex-1 flex justify-center items-center min-w-[200px]">
                   <span className="text-xl md:text-2xl font-bold font-display text-muted hover:text-primary cursor-default transition-colors whitespace-nowrap">

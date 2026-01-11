@@ -3,6 +3,7 @@ import { Navbar } from './components/Navbar';
 import { Hero } from './sections/Hero';
 import { Brands } from './sections/Brands';
 import { Footer } from './components/Footer';
+import { ScrollToTop } from './components/ScrollToTop';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { LanguageProvider } from './contexts/LanguageContext';
 
@@ -17,7 +18,7 @@ const Pricing = lazy(() => import('./sections/Pricing').then(module => ({ defaul
 const Faq = lazy(() => import('./sections/Faq').then(module => ({ default: module.Faq })));
 
 const SectionLoader = () => (
-  <div className="py-20 flex items-center justify-center">
+  <div className="py-32 flex items-center justify-center min-h-[50vh] w-full" aria-label="Loading content">
     <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
   </div>
 );
@@ -44,6 +45,7 @@ function AppContent() {
         </Suspense>
       </main>
       <Footer />
+      <ScrollToTop />
     </div>
   );
 }

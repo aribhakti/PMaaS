@@ -10,16 +10,15 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [theme, setTheme] = useState<Theme>('dark');
+  const [theme, setTheme] = useState<Theme>('light');
 
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme') as Theme | null;
     if (savedTheme) {
       setTheme(savedTheme);
-    } else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
-      // Default to dark per design, but respect system preference if explicit? 
-      // Actually, original design is dark, let's keep dark as default unless saved.
-      setTheme('dark');
+    } else {
+      // Default to light mode explicitly
+      setTheme('light');
     }
   }, []);
 

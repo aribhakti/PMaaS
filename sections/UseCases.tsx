@@ -15,7 +15,15 @@ export const UseCases: React.FC = () => {
 
   const icons = [Box, Building2, ShoppingBag];
   const accentColors = ["text-pink-500", "text-blue-500", "text-orange-500"];
-  const bgAccents = ["group-hover:bg-pink-500/10 group-hover:border-pink-500/20", "group-hover:bg-blue-500/10 group-hover:border-blue-500/20", "group-hover:bg-orange-500/10 group-hover:border-orange-500/20"];
+  const bgAccents = ["group-hover:bg-pink-500/5 group-hover:border-pink-500/20", "group-hover:bg-blue-500/5 group-hover:border-blue-500/20", "group-hover:bg-orange-500/5 group-hover:border-orange-500/20"];
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    e.currentTarget.style.setProperty('--mouse-x', `${x}px`);
+    e.currentTarget.style.setProperty('--mouse-y', `${y}px`);
+  };
 
   return (
     <Section id="use-cases" className="bg-surface/50 border-t border-border">
@@ -38,7 +46,18 @@ export const UseCases: React.FC = () => {
 
           return (
             <FadeIn key={index} delay={index * 150} className="h-full">
-              <div className={`relative group h-full overflow-hidden rounded-2xl bg-surface border border-border p-8 transition-all duration-300 ${bgHoverClass} hover:-translate-y-1 hover:scale-[1.02] hover:shadow-2xl`}>
+              <div 
+                onMouseMove={handleMouseMove}
+                className={`relative group h-full overflow-hidden rounded-2xl bg-surface border border-border p-8 transition-all duration-300 ${bgHoverClass} hover:-translate-y-1 hover:scale-[1.02] hover:shadow-2xl`}
+              >
+                 {/* Spotlight Effect - Uses primary color opacity for light/dark compatibility */}
+                 <div 
+                  className="pointer-events-none absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0 mix-blend-soft-light"
+                  style={{
+                    background: `radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(var(--primary), 0.08), transparent 40%)`
+                  }}
+                />
+
                 <div className={`absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity transform group-hover:scale-110 duration-500 ${accentClass}`}>
                   <Icon className="w-24 h-24 rotate-12" />
                 </div>

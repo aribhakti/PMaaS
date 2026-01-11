@@ -7,7 +7,15 @@
     <meta name="keywords" content="Product Management, PMaaS, Fractional PM, Product Strategy, Product Roadmap, Startup Product Management, Agile, Scrum, Product Development" />
     <meta name="author" content="PMaaS" />
     <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)" />
     <link rel="canonical" href="https://pmaas.io" />
+    
+    <!-- Performance Hints -->
+    <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin />
+    <link rel="preconnect" href="https://esm.sh" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     
     <!-- Open Graph / Facebook -->
     <meta property="og:title" content="PMaaS | World-class Product Management on Demand" />
@@ -15,12 +23,94 @@
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://pmaas.io" />
     <meta property="og:image" content="https://pmaas.io/og-image.jpg" />
+    <meta property="og:site_name" content="PMaaS" />
+    <meta property="og:locale" content="en_US" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="PMaaS | World-class Product Management on Demand" />
     <meta name="twitter:description" content="Fractional Product Management for ambitious startups and enterprises." />
     <meta name="twitter:image" content="https://pmaas.io/og-image.jpg" />
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    [
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "PMaaS",
+        "url": "https://pmaas.io",
+        "logo": "https://pmaas.io/logo.png",
+        "description": "Product Management as a Service for startups and enterprises.",
+        "sameAs": [
+          "https://twitter.com/pmaas",
+          "https://linkedin.com/company/pmaas",
+          "https://github.com/pmaas"
+        ],
+        "offers": {
+          "@type": "Offer",
+          "price": "10000000",
+          "priceCurrency": "IDR",
+          "name": "Standard Plan",
+          "description": "One active request at a time, 48h delivery."
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Why wouldn't I just hire a full-time Product Manager?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Hiring a senior PM costs $150k+ annually plus benefits, and it takes months to find the right one. With PMaaS, you get immediate access to senior talent for a fraction of the cost, with the flexibility to pause or cancel anytime."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is there a limit to how many requests I can have?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No! Once subscribed, you can add as many requests to your queue as you'd like. We deliver them one by one (or two at a time on the Pro plan)."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How fast will I receive my deliverables?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "On average, requests are completed in just 48 hours. However, more complex requests like a full product strategy or a comprehensive PRD can take longer."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Who are the Product Managers?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "We are a team of Senior PMs who have worked at top tech companies and startups. You are not getting a junior PM or an intern; you get seasoned experts."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What if I don't like the work?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No worries! We'll revise it until you're 100% satisfied. The nature of our subscription means we are incentivized to keep you happy every single month."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What communication channels do you use?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "We use Trello or Linear for managing requests and Slack for quick communication. We avoid unnecessary meetings to focus on execution, but the Pro plan includes weekly syncs."
+            }
+          }
+        ]
+      }
+    ]
+    </script>
 
     <title>PMaaS | World-class Product Management on Demand</title>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -52,6 +142,7 @@
               'shimmer': 'shimmer 2s linear infinite',
               'pop-in': 'popIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards',
               'shimmer-pulse': 'shimmerPulse 3s ease-in-out infinite',
+              'progress-fill': 'progressFill 2s ease-out forwards',
             },
             keyframes: {
               fadeIn: {
@@ -81,52 +172,63 @@
               shimmerPulse: {
                 '0%, 100%': { opacity: '1', transform: 'scale(1)' },
                 '50%': { opacity: '0.8', transform: 'scale(1.1)' },
+              },
+              progressFill: {
+                '0%': { width: '0%' },
+                '100%': { width: 'var(--target-width, 100%)' },
               }
             },
           },
         },
       };
     </script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
     <style>
       :root {
-        /* Dark Mode (Default) */
-        --background: 10 10 10; /* #0a0a0a */
-        --surface: 23 23 23; /* #171717 */
-        --surface-highlight: 38 38 38; /* #262626 */
-        --primary: 255 255 255; /* #ffffff */
-        --primary-foreground: 0 0 0; /* #000000 */
-        --muted: 161 161 170; /* #a1a1aa (zinc-400) */
-        --border: 39 39 42; /* #27272a */
+        /* Dark Mode (Fallback/Original) */
+        --background: 10 10 10; 
+        --surface: 23 23 23; 
+        --surface-highlight: 38 38 38; 
+        --primary: 255 255 255; 
+        --primary-foreground: 0 0 0; 
+        --muted: 161 161 170; 
+        --border: 39 39 42; 
       }
 
       [data-theme='light'] {
-        /* Light Mode */
-        --background: 255 255 255; /* #ffffff */
-        --surface: 244 244 245; /* #f4f4f5 (zinc-100) */
-        --surface-highlight: 228 228 231; /* #e4e4e7 (zinc-200) */
-        --primary: 9 9 11; /* #09090b (zinc-950) */
-        --primary-foreground: 255 255 255; /* #ffffff */
-        --muted: 82 82 91; /* #52525b (zinc-600) */
-        --border: 228 228 231; /* #e4e4e7 */
+        /* Light Mode - Refined for Cleanliness */
+        --background: 255 255 255; /* Pure White */
+        --surface: 249 250 251; /* Gray 50 - Very subtle off-white for cards */
+        --surface-highlight: 243 244 246; /* Gray 100 - Interaction states */
+        --primary: 15 23 42; /* Slate 900 - Sharp Black/Blue for text */
+        --primary-foreground: 255 255 255; 
+        --muted: 100 116 139; /* Slate 500 - Balanced gray */
+        --border: 226 232 240; /* Slate 200 - Soft borders */
+      }
+
+      [data-theme='dark'] {
+         /* Explicit Dark Mode Overrides if needed, matching root defaults */
+        --background: 10 10 10; 
+        --surface: 23 23 23; 
+        --surface-highlight: 38 38 38; 
+        --primary: 255 255 255; 
+        --primary-foreground: 0 0 0; 
+        --muted: 161 161 170; 
+        --border: 39 39 42; 
       }
 
       body {
-        /* Apply the base color via variable */
         background-color: rgb(var(--background));
-        /* Gradient: Top-Left (Base) to Bottom-Right (Surface Highlight) */
-        background-image: linear-gradient(135deg, rgb(var(--background)) 0%, rgb(var(--surface-highlight)) 100%);
-        background-attachment: fixed;
-        min-height: 100vh;
-        
         color: rgb(var(--primary));
-        transition: color 0.3s ease;
+        transition: background-color 0.3s ease, color 0.3s ease;
       }
       
       html {
-        scroll-padding-top: 80px; /* Ensures anchor links don't hide behind navbar */
+        scroll-padding-top: 80px;
+      }
+      
+      h1, h2, h3, h4, h5, h6 {
+        text-wrap: balance;
       }
 
       /* Custom Scrollbar */
@@ -142,6 +244,13 @@
       }
       ::-webkit-scrollbar-thumb:hover {
         background: rgb(var(--muted));
+      }
+      
+      /* Performance optimizations */
+      .gpu-accelerated {
+        transform: translateZ(0);
+        backface-visibility: hidden;
+        perspective: 1000px;
       }
     </style>
   <script type="importmap">

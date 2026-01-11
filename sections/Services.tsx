@@ -16,6 +16,14 @@ export const Services: React.FC = () => {
     { ...t.services.items.market, icon: Target, tags: ["Competitive Audit", "Positioning"] }
   ];
 
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    e.currentTarget.style.setProperty('--mouse-x', `${x}px`);
+    e.currentTarget.style.setProperty('--mouse-y', `${y}px`);
+  };
+
   return (
     <Section id="services" className="bg-surfaceHighlight/30">
       <div className="text-center max-w-3xl mx-auto mb-16">
@@ -33,20 +41,33 @@ export const Services: React.FC = () => {
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         {services.map((service, index) => (
           <FadeIn key={index} delay={index * 100} className="h-full">
-            <div className="group h-full p-8 rounded-2xl bg-surface border border-border hover:border-blue-500/30 transition-all duration-300 hover:-translate-y-1 hover:scale-[1.02] hover:shadow-xl hover:shadow-blue-900/10">
-              <div className="w-12 h-12 rounded-lg bg-background border border-border flex items-center justify-center mb-6 group-hover:bg-blue-600 group-hover:border-blue-500 group-hover:text-white transition-all duration-300 text-muted group-hover:scale-110">
-                <service.icon className="w-6 h-6" />
-              </div>
-              <h3 className="text-xl font-bold text-primary mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-100 transition-colors">{service.title}</h3>
-              <p className="text-muted mb-6 leading-relaxed group-hover:text-primary transition-colors">
-                {service.desc}
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {service.tags.map(tag => (
-                  <span key={tag} className="text-xs font-medium px-2 py-1 rounded bg-background text-muted border border-border group-hover:border-blue-500/20 group-hover:text-blue-500/80 transition-colors">
-                    {tag}
-                  </span>
-                ))}
+            <div 
+              onMouseMove={handleMouseMove}
+              className="group relative h-full p-8 rounded-2xl bg-surface border border-border hover:border-blue-500/30 transition-all duration-300 hover:-translate-y-1 hover:scale-[1.02] hover:shadow-xl hover:shadow-blue-900/10 overflow-hidden will-change-transform transform-gpu"
+            >
+              {/* Spotlight Effect */}
+              <div 
+                className="pointer-events-none absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0"
+                style={{
+                  background: `radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(59, 130, 246, 0.08), transparent 40%)`
+                }}
+              />
+
+              <div className="relative z-10">
+                <div className="w-12 h-12 rounded-lg bg-background border border-border flex items-center justify-center mb-6 group-hover:bg-blue-600 group-hover:border-blue-500 group-hover:text-white transition-all duration-300 text-muted group-hover:scale-110">
+                  <service.icon className="w-6 h-6" />
+                </div>
+                <h3 className="text-xl font-bold text-primary mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-100 transition-colors">{service.title}</h3>
+                <p className="text-muted mb-6 leading-relaxed group-hover:text-primary transition-colors">
+                  {service.desc}
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {service.tags.map(tag => (
+                    <span key={tag} className="text-xs font-medium px-2 py-1 rounded bg-background text-muted border border-border group-hover:border-blue-500/20 group-hover:text-blue-500/80 transition-colors">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
           </FadeIn>

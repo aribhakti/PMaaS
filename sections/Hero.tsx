@@ -107,18 +107,32 @@ export const Hero: React.FC = () => {
                 </div>
                 
                 <div className="space-y-4">
-                   {[1, 2, 3].map((i) => (
+                   {[1, 2, 3].map((i) => {
+                     // Dynamic animation configs
+                     const width = i === 1 ? '75%' : (i === 2 ? '45%' : '20%');
+                     const delay = `${i * 300 + 1000}ms`;
+                     
+                     return (
                       <div key={i} className="flex items-center space-x-4">
                          <div className="w-8 h-8 rounded bg-primary/5 border border-primary/5 flex items-center justify-center text-xs text-muted">P{i}</div>
                          <div className="flex-1 space-y-2">
-                            <div className={`h-2 rounded w-3/4 ${i === 1 ? 'bg-blue-500/40' : 'bg-surfaceHighlight'}`}></div>
-                            <div className="h-2 bg-surfaceHighlight/50 rounded w-1/2"></div>
+                            <div className="h-2 bg-surfaceHighlight/50 rounded-full w-full overflow-hidden">
+                               <div 
+                                 className={`h-full rounded-full animate-progress-fill ${i === 1 ? 'bg-blue-500/80' : 'bg-surfaceHighlight'}`} 
+                                 style={{ 
+                                   '--target-width': width, 
+                                   animationDelay: delay 
+                                 } as React.CSSProperties}
+                               ></div>
+                            </div>
+                            <div className="h-2 bg-surfaceHighlight/30 rounded w-1/3"></div>
                          </div>
                          <div className="w-16 h-6 rounded-full bg-primary/5 border border-primary/5"></div>
                       </div>
-                   ))}
+                     );
+                   })}
                    
-                   <div className="mt-8 p-4 bg-background/40 rounded-lg border border-green-500/20 flex items-center justify-between relative overflow-hidden group cursor-pointer hover:bg-background/60 transition-colors">
+                   <div className="mt-8 p-4 bg-background/40 rounded-lg border border-green-500/20 flex items-center justify-between relative overflow-hidden group cursor-pointer hover:bg-background/60 transition-colors opacity-0 animate-fade-in" style={{ animationDelay: '2.5s', animationFillMode: 'forwards' }}>
                       <div className="absolute inset-0 bg-green-500/5 group-hover:bg-green-500/10 transition-colors"></div>
                       <div className="flex items-center space-x-3 relative z-10">
                          <div className="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
